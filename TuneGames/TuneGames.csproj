@@ -11,8 +11,8 @@
 		<Nullable>enable</Nullable>
 
 		<MauiXamlInflator>SourceGen</MauiXamlInflator>
-		<ApplicationTitle>TuneGames</ApplicationTitle>
-		<ApplicationId>com.companyname.tunegames</ApplicationId>
+		<ApplicationTitle>TUNE Games</ApplicationTitle>
+		<ApplicationId>com.shinysoft.tunegames</ApplicationId>
 
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
