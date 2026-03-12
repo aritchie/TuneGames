@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuneGames.Pages.Main"
+             x:Class="TuneGames.Pages.Main.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="TuneGames"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="2*,*,*" Padding="30">
+
+        <!-- Header -->
+        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10">
+            <Label Text="🎵" FontSize="72" HorizontalOptions="Center" />
+            <Label Text="TuneGames"
+                   FontSize="36"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light=#512BD4, Dark=#B39DDB}" />
+            <Label Text="Can you name that tune?"
+                   FontSize="16"
+                   Opacity="0.7"
+                   HorizontalOptions="Center" />
+            <Label Text="{Binding LastScore}"
+                   FontSize="14"
+                   Opacity="0.5"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding LastScore, Converter={StaticResource StringNotEmpty}}" />
+        </VerticalStackLayout>
+
+        <!-- Main Actions -->
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center" Spacing="16" Padding="20,0">
+            <Button Text="🎮  Start Game"
+                    Command="{Binding StartGameCommand}"
+                    FontSize="20"
+                    HeightRequest="60"
+                    BackgroundColor="{AppThemeBinding Light=#512BD4, Dark=#7C4DFF}"
+                    TextColor="White"
+                    CornerRadius="12" />
+        </VerticalStackLayout>
+
+        <!-- Bottom Actions -->
+        <HorizontalStackLayout Grid.Row="2" VerticalOptions="Start" HorizontalOptions="Center" Spacing="20">
+            <Button Text="⚙️ Settings"
+                    Command="{Binding OpenSettingsCommand}"
+                    FontSize="16"
+                    BackgroundColor="Transparent"
+                    TextColor="{AppThemeBinding Light=#512BD4, Dark=#B39DDB}"
+                    BorderColor="{AppThemeBinding Light=#512BD4, Dark=#B39DDB}"
+                    BorderWidth="1"
+                    CornerRadius="8"
+                    WidthRequest="150" />
+            <Button Text="📊 History"
+                    Command="{Binding ViewHistoryCommand}"
+                    FontSize="16"
+                    BackgroundColor="Transparent"
+                    TextColor="{AppThemeBinding Light=#512BD4, Dark=#B39DDB}"
+                    BorderColor="{AppThemeBinding Light=#512BD4, Dark=#B39DDB}"
+                    BorderWidth="1"
+                    CornerRadius="8"
+                    WidthRequest="150" />
+        </HorizontalStackLayout>
+    </Grid>
+
+</ContentPage>

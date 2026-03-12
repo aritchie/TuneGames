@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuneGames.Pages.CategorySelect"
+             xmlns:m="clr-namespace:TuneGames.Models"
+             x:Class="TuneGames.Pages.CategorySelect.CategorySelectPage"
+             x:DataType="vm:CategorySelectViewModel"
+             Title="Choose Category">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+
+        <Label Text="Pick a category for this round"
+               FontSize="18"
+               Opacity="0.7"
+               Margin="0,10,0,20" />
+
+        <CollectionView Grid.Row="1"
+                         ItemsSource="{Binding Categories}"
+                         SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:Category">
+                    <Frame Margin="0,4" Padding="16" CornerRadius="10"
+                           BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
+                           BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
+                                CommandParameter="{Binding}" />
+                        </Frame.GestureRecognizers>
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="{Binding Name}" FontSize="18" FontAttributes="Bold" />
+                            <Label Text="{Binding Description}" FontSize="14" Opacity="0.6" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Grid.Row="2"
+                Text="+ New Category"
+                Command="{Binding AddCategoryCommand}"
+                Margin="0,10,0,0"
+                BackgroundColor="{AppThemeBinding Light=#512BD4, Dark=#7C4DFF}"
+                TextColor="White"
+                CornerRadius="10"
+                HeightRequest="50" />
+    </Grid>
+
+</ContentPage>

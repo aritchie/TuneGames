@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuneGames.Pages.History"
+             xmlns:m="clr-namespace:TuneGames.Models"
+             x:Class="TuneGames.Pages.History.HistoryPage"
+             x:DataType="vm:HistoryViewModel"
+             Title="Game History">
+
+    <Grid Padding="20">
+        <!-- Empty State -->
+        <VerticalStackLayout VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             IsVisible="{Binding IsEmpty}">
+            <Label Text="📊" FontSize="60" HorizontalOptions="Center" />
+            <Label Text="No games played yet" FontSize="18" Opacity="0.5" HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Results List -->
+        <CollectionView ItemsSource="{Binding Results}"
+                         SelectionMode="None"
+                         IsVisible="{Binding IsEmpty, Converter={StaticResource InvertBool}}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:GameResult">
+                    <Frame Margin="0,4" Padding="14" CornerRadius="10"
+                           BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#444}">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <Label Text="🎵" FontSize="24" VerticalOptions="Center" Margin="0,0,12,0" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="{Binding CategoryName}" FontSize="16" FontAttributes="Bold" />
+                                <Label Text="{Binding DatePlayed, StringFormat='{0:MMM dd, yyyy h:mm tt}'}"
+                                       FontSize="12" Opacity="0.5" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2"
+                                   VerticalOptions="Center"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=#512BD4, Dark=#7C4DFF}">
+                                <Label.Text>
+                                    <MultiBinding StringFormat="{}{0}/{1}">
+                                        <Binding Path="CorrectCount" />
+                                        <Binding Path="TotalSongs" />
+                                    </MultiBinding>
+                                </Label.Text>
+                            </Label>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

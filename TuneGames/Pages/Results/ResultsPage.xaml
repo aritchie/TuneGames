@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:TuneGames.Pages.Results"
+             x:Class="TuneGames.Pages.Results.ResultsPage"
+             x:DataType="vm:ResultsViewModel"
+             Title="Results"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="20">
+
+        <!-- Score Header -->
+        <VerticalStackLayout HorizontalOptions="Center" Spacing="8" Margin="0,20,0,10">
+            <Label Text="{Binding Emoji}" FontSize="60" HorizontalOptions="Center" />
+            <Label Text="{Binding ScoreText}"
+                   FontSize="40"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   TextColor="{AppThemeBinding Light=#512BD4, Dark=#7C4DFF}" />
+            <Label Text="songs identified correctly"
+                   FontSize="14"
+                   Opacity="0.5"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Result Items -->
+        <CollectionView Grid.Row="1"
+                         ItemsSource="{Binding ResultItems}"
+                         SelectionMode="None"
+                         Margin="0,10,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:ResultItem">
+                    <Frame Margin="0,3" Padding="12" CornerRadius="8"
+                           BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#444}">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Label FontSize="20" VerticalOptions="Center" Margin="0,0,10,0"
+                                   Text="{Binding Status, Converter={StaticResource ResultStatusEmoji}}" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="{Binding Title}" FontSize="15" FontAttributes="Bold" />
+                                <Label FontSize="12" Opacity="0.6">
+                                    <Label.Text>
+                                        <MultiBinding StringFormat="{}{0} · {1}">
+                                            <Binding Path="Artist" />
+                                            <Binding Path="Album" />
+                                        </MultiBinding>
+                                    </Label.Text>
+                                </Label>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Actions -->
+        <VerticalStackLayout Grid.Row="2" Spacing="10" Margin="0,10,0,10">
+            <Button Text="🎮  Play Again"
+                    Command="{Binding PlayAgainCommand}"
+                    FontSize="18"
+                    HeightRequest="52"
+                    BackgroundColor="{AppThemeBinding Light=#512BD4, Dark=#7C4DFF}"
+                    TextColor="White"
+                    CornerRadius="10" />
+            <Button Text="Home"
+                    Command="{Binding GoHomeCommand}"
+                    FontSize="16"
+                    BackgroundColor="Transparent"
+                    TextColor="{AppThemeBinding Light=#512BD4, Dark=#B39DDB}" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
