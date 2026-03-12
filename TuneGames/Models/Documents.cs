@@ -15,6 +15,10 @@ public class GameSettings
     public int TotalChoices { get; set; } = 12;
     public int AnswerTimeLimitSeconds { get; set; } = 30;
     public int PauseBetweenClipsSeconds { get; set; } = 2;
+    
+    // public string? AzureOpenAiEndpoint { get; set; } = "";
+    // public string? AzureOpenAiApiKey { get; set; } = "";
+    // public string AzureOpenAiDeployment { get; set; } = "gpt-4.1";
 }
 
 public class GameResult

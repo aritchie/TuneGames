@@ -1,6 +1,7 @@
+using Azure;
+using Azure.AI.OpenAI;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Logging;
-using OpenAI;
 using Shiny;
 using Shiny.Maui.TableView;
 using Shiny.Music;
@@ -11,9 +12,9 @@ namespace TuneGames;
 
 public static class MauiProgram
 {
-    // TODO: Replace with your OpenAI API key or move to secure storage
-    const string OpenAiApiKey = "YOUR-OPENAI-KEY-HERE";
-    const string OpenAiModel = "gpt-4o-mini";
+    const string AzureOpenAiEndpoint = "";
+    const string AzureOpenAiApiKey = "";
+    const string AzureOpenAiDeployment = "gpt-4.1";
 
     public static MauiApp CreateMauiApp()
     {
@@ -39,10 +40,12 @@ public static class MauiProgram
             config.ConnectionString = $"Data Source={Path.Combine(FileSystem.AppDataDirectory, "tunegames.db")}";
         });
 
-        // AI / OpenAI
+        // AI / Azure OpenAI
         builder.Services.AddSingleton<IChatClient>(_ =>
-            new OpenAIClient(OpenAiApiKey)
-                .GetChatClient(OpenAiModel)
+            new AzureOpenAIClient(
+                    new Uri(AzureOpenAiEndpoint),
+                    new AzureKeyCredential(AzureOpenAiApiKey))
+                .GetChatClient(AzureOpenAiDeployment)
                 .AsIChatClient()
         );
 

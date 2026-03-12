@@ -1,4 +1,6 @@
 using System.Text.Json;
+using Azure;
+using Azure.AI.OpenAI;
 using Microsoft.Extensions.AI;
 using Shiny.Music;
 using TuneGames.Models;
@@ -15,14 +17,29 @@ public interface IAiSongPicker
     );
 }
 
-public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
+public class AiSongPicker(IGameStore store, IChatClient chatClient) : IAiSongPicker
 {
+    // async Task<IChatClient> GetChatClientAsync()
+    // {
+    //     var settings = await store.GetSettingsAsync();
+    //     if (string.IsNullOrWhiteSpace(settings.AzureOpenAiEndpoint) ||
+    //         string.IsNullOrWhiteSpace(settings.AzureOpenAiApiKey))
+    //         throw new InvalidOperationException("Azure OpenAI endpoint and API key must be configured in Settings.");
+    //
+    //     var client = new AzureOpenAIClient(
+    //         new Uri(settings.AzureOpenAiEndpoint),
+    //         new AzureKeyCredential(settings.AzureOpenAiApiKey)
+    //     );
+    //     return client.GetChatClient(settings.AzureOpenAiDeployment).AsIChatClient();
+    // }
+
     public async Task<AiPickResult> PickSongsAsync(
         string category,
         IReadOnlyList<MusicMetadata> availableTracks,
         int songsToPlay,
         int totalChoices)
     {
+        //var chatClient = await GetChatClientAsync();
         var trackList = availableTracks
             .Select(t => new { t.Id, t.Title, t.Artist, t.Album })
             .ToList();
