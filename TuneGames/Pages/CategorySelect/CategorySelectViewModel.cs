@@ -20,6 +20,9 @@ public partial class CategorySelectViewModel(INavigator navigator, IGameStore st
     List<CategoryItem> years = [];
 
     [ObservableProperty]
+    List<CategoryItem> playlists = [];
+
+    [ObservableProperty]
     bool isLoading;
 
     public void OnAppearing() => _ = this.LoadCategories();
@@ -50,6 +53,12 @@ public partial class CategorySelectViewModel(INavigator navigator, IGameStore st
                 .Where(y => y.Count >= minCount)
                 .Select(y => new CategoryItem(y.Value.ToString(), y.Count, Year: y.Value))
                 .ToList();
+
+            var playlistResults = await music.GetPlaylistsAsync();
+            this.Playlists = playlistResults
+                .Where(p => p.SongCount >= minCount)
+                .Select(p => new CategoryItem(p.Name, p.SongCount, PlaylistId: p.Id))
+                .ToList();
         }
         finally
         {
@@ -65,5 +74,6 @@ public partial class CategorySelectViewModel(INavigator navigator, IGameStore st
             vm.Genre = item.Genre;
             vm.Decade = item.Decade;
             vm.Year = item.Year;
+            vm.PlaylistId = item.PlaylistId;
         });
 }

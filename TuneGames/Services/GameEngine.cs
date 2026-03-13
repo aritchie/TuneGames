@@ -5,20 +5,22 @@ namespace TuneGames.Services;
 
 public interface IGameEngine
 {
-    Task<GameRound> StartRoundAsync(string categoryName, MusicFilter filter, GameSettings settings);
+    Task<GameRound> StartRoundAsync(string categoryName, MusicFilter filter, GameSettings settings, string? playlistId = null);
     Task PlayClipsAsync(GameRound round, Action<int, int>? onProgress = null, CancellationToken ct = default);
     GameResult SubmitAnswers(GameRound round, IReadOnlyList<string> selectedSongIds);
 }
 
 public class GameEngine(IMusicService music, IAiSongPicker aiPicker) : IGameEngine
 {
-    public async Task<GameRound> StartRoundAsync(string categoryName, MusicFilter filter, GameSettings settings)
+    public async Task<GameRound> StartRoundAsync(string categoryName, MusicFilter filter, GameSettings settings, string? playlistId = null)
     {
         var hasPermission = await music.RequestPermissionAsync();
         if (!hasPermission)
             throw new InvalidOperationException("Music library permission is required to play the game.");
 
-        var tracks = await music.GetTracksAsync(filter);
+        var tracks = playlistId != null
+            ? await music.GetPlaylistTracksAsync(playlistId)
+            : await music.GetTracksAsync(filter);
         if (tracks.Count < settings.TotalChoices)
             throw new InvalidOperationException(
                 $"Not enough songs in this category. Found {tracks.Count}, need at least {settings.TotalChoices}.");

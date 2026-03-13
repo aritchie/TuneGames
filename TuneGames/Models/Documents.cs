@@ -7,7 +7,7 @@ public class Category
     public string? Description { get; set; }
 }
 
-public record CategoryItem(string DisplayName, int TrackCount, string? Genre = null, int? Decade = null, int? Year = null);
+public record CategoryItem(string DisplayName, int TrackCount, string? Genre = null, int? Decade = null, int? Year = null, string? PlaylistId = null);
 
 public class GameSettings
 {

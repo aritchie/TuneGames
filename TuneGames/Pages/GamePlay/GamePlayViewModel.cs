@@ -33,6 +33,10 @@ public partial class GamePlayViewModel(
     [ObservableProperty]
     int? year;
 
+    [property: ShellProperty]
+    [ObservableProperty]
+    string? playlistId;
+
     [ObservableProperty]
     string statusText = "Loading...";
 
@@ -72,7 +76,8 @@ public partial class GamePlayViewModel(
             this.round = await gameEngine.StartRoundAsync(
                 this.CategoryName,
                 new MusicFilter { Genre = this.Genre, Decade = this.Decade, Year = this.Year },
-                settings
+                settings,
+                this.PlaylistId
             );
 
             this.Phase = GamePhase.Playing;

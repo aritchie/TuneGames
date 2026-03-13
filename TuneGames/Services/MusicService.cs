@@ -9,6 +9,8 @@ public interface IMusicService
     Task<IReadOnlyList<GroupedCount<string>>> GetGenresAsync();
     Task<IReadOnlyList<GroupedCount<int>>> GetDecadesAsync();
     Task<IReadOnlyList<GroupedCount<int>>> GetYearsAsync();
+    Task<IReadOnlyList<PlaylistInfo>> GetPlaylistsAsync();
+    Task<IReadOnlyList<MusicMetadata>> GetPlaylistTracksAsync(string playlistId);
     Task<IReadOnlyList<MusicMetadata>> GetAllTracksAsync();
     Task<IReadOnlyList<MusicMetadata>> GetTracksAsync(MusicFilter filter);
     Task<IReadOnlyList<MusicMetadata>> SearchTracksAsync(string query);
@@ -51,6 +53,12 @@ public class MusicService : IMusicService
 
     public Task<IReadOnlyList<GroupedCount<int>>> GetYearsAsync()
         => this.library.GetYearsAsync();
+
+    public Task<IReadOnlyList<PlaylistInfo>> GetPlaylistsAsync()
+        => this.library.GetPlaylistsAsync();
+
+    public Task<IReadOnlyList<MusicMetadata>> GetPlaylistTracksAsync(string playlistId)
+        => this.library.GetPlaylistTracksAsync(playlistId);
 
     public async Task<IReadOnlyList<MusicMetadata>> GetAllTracksAsync()
         => await this.library.GetAllTracksAsync();
