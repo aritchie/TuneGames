@@ -12,8 +12,8 @@ namespace TuneGames;
 
 public static class MauiProgram
 {
-    const string AzureOpenAiEndpoint = "";
-    const string AzureOpenAiApiKey = "";
+    const string AzureOpenAiEndpoint = "https://shinyopenai.openai.azure.com/";
+    const string AzureOpenAiApiKey = "FRiLwR72ZuvOWu58pjk1E77ifEb5JpKl0oAiw5u1tsadvEzJkaR9JQQJ99BJACYeBjFXJ3w3AAABACOGr6Bu";
     const string AzureOpenAiDeployment = "gpt-4.1";
 
     public static MauiApp CreateMauiApp()

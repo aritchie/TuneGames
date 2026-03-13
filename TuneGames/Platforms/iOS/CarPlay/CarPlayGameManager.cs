@@ -2,6 +2,7 @@ using CarPlay;
 using Foundation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Shiny.Music;
 using TuneGames.Models;
 using TuneGames.Services;
 
@@ -50,7 +51,11 @@ public class CarPlayGameManager
             var engine = this.scope.ServiceProvider.GetRequiredService<IGameEngine>();
             var settings = await this.scope.ServiceProvider.GetRequiredService<IGameStore>().GetSettingsAsync();
 
-            this.round = await engine.StartRoundAsync(categoryName, settings);
+            this.round = await engine.StartRoundAsync(
+                categoryName,
+                new MusicFilter { Genre = categoryName },
+                settings
+            );
 
             if (this.isCleanedUp) return;
 

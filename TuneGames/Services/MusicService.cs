@@ -6,7 +6,11 @@ public interface IMusicService
 {
     Task<bool> RequestPermissionAsync();
     Task<bool> HasStreamingSubscriptionAsync();
+    Task<IReadOnlyList<GroupedCount<string>>> GetGenresAsync();
+    Task<IReadOnlyList<GroupedCount<int>>> GetDecadesAsync();
+    Task<IReadOnlyList<GroupedCount<int>>> GetYearsAsync();
     Task<IReadOnlyList<MusicMetadata>> GetAllTracksAsync();
+    Task<IReadOnlyList<MusicMetadata>> GetTracksAsync(MusicFilter filter);
     Task<IReadOnlyList<MusicMetadata>> SearchTracksAsync(string query);
     Task PlayTrackAsync(MusicMetadata track);
     Task PlayClipAsync(MusicMetadata track, TimeSpan duration);
@@ -39,8 +43,20 @@ public class MusicService : IMusicService
     public Task<bool> HasStreamingSubscriptionAsync()
         => this.library.HasStreamingSubscriptionAsync();
 
+    public Task<IReadOnlyList<GroupedCount<string>>> GetGenresAsync()
+        => this.library.GetGenresAsync();
+
+    public Task<IReadOnlyList<GroupedCount<int>>> GetDecadesAsync()
+        => this.library.GetDecadesAsync();
+
+    public Task<IReadOnlyList<GroupedCount<int>>> GetYearsAsync()
+        => this.library.GetYearsAsync();
+
     public async Task<IReadOnlyList<MusicMetadata>> GetAllTracksAsync()
         => await this.library.GetAllTracksAsync();
+
+    public async Task<IReadOnlyList<MusicMetadata>> GetTracksAsync(MusicFilter filter)
+        => await this.library.GetTracksAsync(filter);
 
     public async Task<IReadOnlyList<MusicMetadata>> SearchTracksAsync(string query)
         => await this.library.SearchTracksAsync(query);

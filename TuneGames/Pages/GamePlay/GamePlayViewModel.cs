@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Shiny;
+using Shiny.Music;
 using TuneGames.Models;
 using TuneGames.Services;
 
@@ -19,6 +20,18 @@ public partial class GamePlayViewModel(
     [property: ShellProperty]
     [ObservableProperty]
     string categoryName = "";
+
+    [property: ShellProperty]
+    [ObservableProperty]
+    string? genre;
+
+    [property: ShellProperty]
+    [ObservableProperty]
+    int? decade;
+
+    [property: ShellProperty]
+    [ObservableProperty]
+    int? year;
 
     [ObservableProperty]
     string statusText = "Loading...";
@@ -56,7 +69,11 @@ public partial class GamePlayViewModel(
             var settings = await store.GetSettingsAsync();
             this.TotalSongs = settings.SongsPerRound;
 
-            this.round = await gameEngine.StartRoundAsync(this.CategoryName, settings);
+            this.round = await gameEngine.StartRoundAsync(
+                this.CategoryName,
+                new MusicFilter { Genre = this.Genre, Decade = this.Decade, Year = this.Year },
+                settings
+            );
 
             this.Phase = GamePhase.Playing;
             this.StatusText = "Listen carefully!";

@@ -24,9 +24,6 @@ public partial class SettingsViewModel(IGameStore store, IDialogs dialogs, INavi
     [ObservableProperty]
     int pauseBetweenClips;
 
-    [ObservableProperty]
-    List<Category> categories = [];
-
     public async void OnAppearing()
     {
         var settings = await store.GetSettingsAsync();
@@ -35,8 +32,6 @@ public partial class SettingsViewModel(IGameStore store, IDialogs dialogs, INavi
         this.TotalChoices = settings.TotalChoices;
         this.AnswerTimeLimit = settings.AnswerTimeLimitSeconds;
         this.PauseBetweenClips = settings.PauseBetweenClipsSeconds;
-
-        this.Categories = (await store.GetCategoriesAsync()).ToList();
     }
 
     public void OnDisappearing() { }
@@ -54,26 +49,6 @@ public partial class SettingsViewModel(IGameStore store, IDialogs dialogs, INavi
         };
         await store.SaveSettingsAsync(settings);
         await dialogs.Alert("Saved", "Settings updated successfully.");
-    }
-
-    [RelayCommand]
-    async Task AddCategory()
-    {
-        var name = await dialogs.Prompt("New Category", "Enter category name:", placeholder: "e.g. 90s Pop");
-        if (string.IsNullOrWhiteSpace(name)) return;
-
-        await store.SaveCategoryAsync(new Category { Name = name.Trim() });
-        this.Categories = (await store.GetCategoriesAsync()).ToList();
-    }
-
-    [RelayCommand]
-    async Task DeleteCategory(Category category)
-    {
-        var confirm = await dialogs.Confirm("Delete", $"Delete '{category.Name}'?");
-        if (!confirm) return;
-
-        await store.DeleteCategoryAsync(category.Id);
-        this.Categories = (await store.GetCategoriesAsync()).ToList();
     }
 
     [RelayCommand]

@@ -31,13 +31,6 @@
                                               Number="{Binding PauseBetweenClips, Mode=TwoWay}" />
                     </tv:TableSection>
 
-                    <!-- Categories -->
-                    <tv:TableSection Title="Categories">
-                        <tv:CommandCell Title="+ Add Category"
-                                         Command="{Binding AddCategoryCommand}"
-                                         ShowArrow="False" />
-                    </tv:TableSection>
-
                     <!-- Data -->
                     <tv:TableSection Title="Data">
                         <tv:CommandCell Title="Clear Game History"

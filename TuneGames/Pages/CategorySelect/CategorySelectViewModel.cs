@@ -8,10 +8,16 @@ using TuneGames.Services;
 namespace TuneGames.Pages.CategorySelect;
 
 [ShellMap<CategorySelectPage>]
-public partial class CategorySelectViewModel(INavigator navigator, IDialogs dialogs, IGameStore store) : ObservableObject, IPageLifecycleAware
+public partial class CategorySelectViewModel(INavigator navigator, IGameStore store, IMusicService music) : ObservableObject, IPageLifecycleAware
 {
     [ObservableProperty]
-    List<Category> categories = [];
+    List<CategoryItem> genres = [];
+
+    [ObservableProperty]
+    List<CategoryItem> decades = [];
+
+    [ObservableProperty]
+    List<CategoryItem> years = [];
 
     [ObservableProperty]
     bool isLoading;
@@ -24,7 +30,26 @@ public partial class CategorySelectViewModel(INavigator navigator, IDialogs dial
         this.IsLoading = true;
         try
         {
-            this.Categories = (await store.GetCategoriesAsync()).ToList();
+            var settings = await store.GetSettingsAsync();
+            var minCount = settings.TotalChoices;
+
+            var genreResults = await music.GetGenresAsync();
+            this.Genres = genreResults
+                .Where(g => g.Count >= minCount)
+                .Select(g => new CategoryItem(g.Value, g.Count, Genre: g.Value))
+                .ToList();
+
+            var decadeResults = await music.GetDecadesAsync();
+            this.Decades = decadeResults
+                .Where(d => d.Count >= minCount)
+                .Select(d => new CategoryItem($"{d.Value}s", d.Count, Decade: d.Value))
+                .ToList();
+
+            var yearResults = await music.GetYearsAsync();
+            this.Years = yearResults
+                .Where(y => y.Count >= minCount)
+                .Select(y => new CategoryItem(y.Value.ToString(), y.Count, Year: y.Value))
+                .ToList();
         }
         finally
         {
@@ -33,21 +58,12 @@ public partial class CategorySelectViewModel(INavigator navigator, IDialogs dial
     }
 
     [RelayCommand]
-    Task SelectCategory(Category category)
-        => navigator.NavigateTo<GamePlayViewModel>(vm => vm.CategoryName = category.Name);
-
-    [RelayCommand]
-    async Task AddCategory()
-    {
-        var name = await dialogs.Prompt("New Category", "Enter category name:", placeholder: "e.g. 90s Pop");
-        if (!String.IsNullOrWhiteSpace(name))
+    Task SelectCategory(CategoryItem item)
+        => navigator.NavigateTo<GamePlayViewModel>(vm =>
         {
-            var category = new Category
-            {
-                Name = name.Trim()
-            };
-            await store.SaveCategoryAsync(category);
-            await this.LoadCategories();
-        }
-    }
+            vm.CategoryName = item.DisplayName;
+            vm.Genre = item.Genre;
+            vm.Decade = item.Decade;
+            vm.Year = item.Year;
+        });
 }

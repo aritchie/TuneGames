@@ -39,22 +39,28 @@ public class CarPlayMenuManager
         {
             var services = IPlatformApplication.Current!.Services;
             var store = services.GetRequiredService<IGameStore>();
+            var music = services.GetRequiredService<IMusicService>();
 
-            var categories = await store.GetCategoriesAsync();
-            var categoryItems = categories.Select(c =>
-            {
-                var item = new CPListItem(c.Name, c.Description ?? "Tap to play")
+            var settings = await store.GetSettingsAsync();
+            var minCount = settings.TotalChoices;
+
+            var genres = await music.GetGenresAsync();
+            var categoryItems = genres
+                .Where(g => g.Count >= minCount)
+                .Select(g =>
                 {
-                    Handler = (listItem, completion) =>
+                    var item = new CPListItem(g.Value, $"{g.Count} songs")
                     {
-                        this.onStartGame(c.Name);
-                        completion();
-                    }
-                };
-                return (ICPListTemplateItem)item;
-            }).ToArray();
+                        Handler = (listItem, completion) =>
+                        {
+                            this.onStartGame(g.Value);
+                            completion();
+                        }
+                    };
+                    return (ICPListTemplateItem)item;
+                }).ToArray();
 
-            var categorySection = new CPListSection(categoryItems, "Pick a Category", null);
+            var categorySection = new CPListSection(categoryItems, "Pick a Genre", null);
 
             var results = await store.GetResultsAsync();
             var historySections = Array.Empty<CPListSection>();

@@ -12,6 +12,7 @@
 
             <conv:StringNotEmptyConverter x:Key="StringNotEmpty" />
             <conv:InvertBoolConverter x:Key="InvertBool" />
+            <conv:IntToBoolConverter x:Key="IntToBoolConverter" />
             <conv:CheckMarkConverter x:Key="CheckMark" />
             <conv:SelectedBorderColorConverter x:Key="SelectedBorderColor" />
             <conv:SelectedBackgroundConverter x:Key="SelectedBackground" />
