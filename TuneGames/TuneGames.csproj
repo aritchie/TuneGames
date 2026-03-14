@@ -18,8 +18,6 @@
 		<ApplicationVersion>1</ApplicationVersion>
 		<MauiVersion>10.0.41</MauiVersion>
 
-		<DefineConstants>$(DefineConstants);CARPLAY</DefineConstants>
-
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
@@ -35,6 +33,10 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1A0536" BaseSize="168,168" />
 		<MauiFont Include="Resources\Fonts\*" />
+
+        <MauiAsset Include="appsettings.json" LogicalName="appsettings.json"/>
+        <Content Remove="**\appsettings.json"/>
+        <Content Remove="**\appsettings.*.json"/>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -44,65 +46,11 @@
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.4" Condition="'$(Configuration)' == 'DEBUG'"/>
 		<PackageReference Include="Shiny.Extensions.MauiHosting" Version="2.0.0" />
+        <PackageReference Include="Shiny.Extensions.Configuration" Version="4.0.0-beta-0095" />
 		<PackageReference Include="Shiny.Maui.Shell" Version="3.1.0" />
 		<PackageReference Include="Shiny.Maui.TableView" Version="1.0.2" />
 		<PackageReference Include="Shiny.Music" Version="1.3.0" />
 		<PackageReference Include="Shiny.SqliteDocumentDb" Version="1.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="AnswerPage.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="CategorySelectPage.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="GamePlayPage.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="HistoryPage.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="MainPage.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="ResultsPage.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	  <MauiXaml Update="SettingsPage.xaml">
-	    <SubType>Designer</SubType>
-	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="AnswerPage.xaml.cs">
-	    <DependentUpon>AnswerPage.xaml</DependentUpon>
-	    <SubType>Code</SubType>
-	  </Compile>
-	  <Compile Update="CategorySelectPage.xaml.cs">
-	    <DependentUpon>CategorySelectPage.xaml</DependentUpon>
-	    <SubType>Code</SubType>
-	  </Compile>
-	  <Compile Update="GamePlayPage.xaml.cs">
-	    <DependentUpon>GamePlayPage.xaml</DependentUpon>
-	    <SubType>Code</SubType>
-	  </Compile>
-	  <Compile Update="HistoryPage.xaml.cs">
-	    <DependentUpon>HistoryPage.xaml</DependentUpon>
-	    <SubType>Code</SubType>
-	  </Compile>
-	  <Compile Update="MainPage.xaml.cs">
-	    <DependentUpon>MainPage.xaml</DependentUpon>
-	    <SubType>Code</SubType>
-	  </Compile>
-	  <Compile Update="ResultsPage.xaml.cs">
-	    <DependentUpon>ResultsPage.xaml</DependentUpon>
-	    <SubType>Code</SubType>
-	  </Compile>
-	  <Compile Update="SettingsPage.xaml.cs">
-	    <DependentUpon>SettingsPage.xaml</DependentUpon>
-	    <SubType>Code</SubType>
-	  </Compile>
 	</ItemGroup>
 
 </Project>
