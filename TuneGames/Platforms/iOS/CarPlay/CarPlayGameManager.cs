@@ -38,8 +38,25 @@ public class CarPlayGameManager
             [new CPInformationItem("Loading...", "AI is picking songs")],
             []
         );
-        template.BackButton = new CPBarButton("Cancel", _ => this.onGameExit());
+        template.BackButton = new CPBarButton("Cancel", _ => this.ConfirmExit());
         this.interfaceController.PushTemplate(template, true, null);
+    }
+
+    void ConfirmExit()
+    {
+        var alert = new CPAlertTemplate(
+            ["Are you sure you want to quit?"],
+            [
+                new CPAlertAction("Quit", CPAlertActionStyle.Destructive, _ =>
+                {
+                    this.interfaceController.DismissTemplate(true, null);
+                    this.onGameExit();
+                }),
+                new CPAlertAction("Cancel", CPAlertActionStyle.Cancel, _ =>
+                    this.interfaceController.DismissTemplate(true, null))
+            ]
+        );
+        this.interfaceController.PresentTemplate(alert, true, null);
     }
 
     async Task RunGameAsync(string categoryName)
@@ -104,7 +121,7 @@ public class CarPlayGameManager
                 items.ToArray(),
                 []
             );
-            template.BackButton = new CPBarButton("Cancel", _ => this.onGameExit());
+            template.BackButton = new CPBarButton("Cancel", _ => this.ConfirmExit());
 
             this.interfaceController.PopToRootTemplate(false, null);
             this.interfaceController.PushTemplate(template, true, null);
@@ -146,7 +163,7 @@ public class CarPlayGameManager
         var submitButton = new CPBarButton("Submit", _ => this.SubmitAnswers());
 
         var template = new CPListTemplate("🧠 Name That Tune!", [section]);
-        template.BackButton = new CPBarButton("Cancel", _ => this.onGameExit());
+        template.BackButton = new CPBarButton("Cancel", _ => this.ConfirmExit());
         template.TrailingNavigationBarButtons = [submitButton];
         return template;
     }

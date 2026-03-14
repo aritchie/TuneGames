@@ -24,14 +24,15 @@
                             IsVisible="{Binding Playlists.Count, Converter={StaticResource IntToBoolConverter}}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:CategoryItem">
-                        <Frame Margin="0,4" Padding="16" CornerRadius="10"
-                               BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
+                        <Border Margin="0,4" Padding="16"
+                               StrokeShape="RoundRectangle 10"
+                               Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
                                BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
-                            <Frame.GestureRecognizers>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
                                     CommandParameter="{Binding}" />
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
                                 <Label Grid.Column="1" FontSize="14" Opacity="0.6"
@@ -41,7 +42,7 @@
                                     </Label.Text>
                                 </Label>
                             </Grid>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -55,14 +56,15 @@
                             IsVisible="{Binding Genres.Count, Converter={StaticResource IntToBoolConverter}}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:CategoryItem">
-                        <Frame Margin="0,4" Padding="16" CornerRadius="10"
-                               BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
+                        <Border Margin="0,4" Padding="16"
+                               StrokeShape="RoundRectangle 10"
+                               Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
                                BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
-                            <Frame.GestureRecognizers>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
                                     CommandParameter="{Binding}" />
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
                                 <Label Grid.Column="1" FontSize="14" Opacity="0.6"
@@ -72,7 +74,7 @@
                                     </Label.Text>
                                 </Label>
                             </Grid>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -86,14 +88,15 @@
                             IsVisible="{Binding Decades.Count, Converter={StaticResource IntToBoolConverter}}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:CategoryItem">
-                        <Frame Margin="0,4" Padding="16" CornerRadius="10"
-                               BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
+                        <Border Margin="0,4" Padding="16"
+                               StrokeShape="RoundRectangle 10"
+                               Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
                                BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
-                            <Frame.GestureRecognizers>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
                                     CommandParameter="{Binding}" />
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
                                 <Label Grid.Column="1" FontSize="14" Opacity="0.6"
@@ -103,7 +106,7 @@
                                     </Label.Text>
                                 </Label>
                             </Grid>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -117,14 +120,15 @@
                             IsVisible="{Binding Years.Count, Converter={StaticResource IntToBoolConverter}}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="m:CategoryItem">
-                        <Frame Margin="0,4" Padding="16" CornerRadius="10"
-                               BorderColor="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
+                        <Border Margin="0,4" Padding="16"
+                               StrokeShape="RoundRectangle 10"
+                               Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
                                BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
-                            <Frame.GestureRecognizers>
+                            <Border.GestureRecognizers>
                                 <TapGestureRecognizer
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
                                     CommandParameter="{Binding}" />
-                            </Frame.GestureRecognizers>
+                            </Border.GestureRecognizers>
                             <Grid ColumnDefinitions="*,Auto">
                                 <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
                                 <Label Grid.Column="1" FontSize="14" Opacity="0.6"
@@ -134,7 +138,7 @@
                                     </Label.Text>
                                 </Label>
                             </Grid>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

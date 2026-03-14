@@ -12,7 +12,7 @@ public partial class GamePlayViewModel(
     IDialogs dialogs,
     IGameEngine gameEngine,
     IGameStore store
-) : ObservableObject, IPageLifecycleAware
+) : ObservableObject, IPageLifecycleAware, INavigationConfirmation
 {
     CancellationTokenSource? playCts;
     GameRound? round;
@@ -54,6 +54,9 @@ public partial class GamePlayViewModel(
 
     [ObservableProperty]
     GamePhase phase = GamePhase.Loading;
+
+    public async Task<bool> CanNavigate()
+        => await dialogs.Confirm("Exit Game", "Are you sure you want to quit?");
 
     public async void OnAppearing() => await this.StartRound();
 
