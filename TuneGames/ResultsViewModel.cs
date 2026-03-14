@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using Shiny;
 using TuneGames.Models;
 
-namespace TuneGames.Pages.Results;
+namespace TuneGames;
 
 [ShellMap<ResultsPage>]
 public partial class ResultsViewModel(INavigator navigator) : ObservableObject

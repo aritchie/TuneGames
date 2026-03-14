@@ -4,7 +4,7 @@ using Shiny;
 using TuneGames.Models;
 using TuneGames.Services;
 
-namespace TuneGames.Pages.History;
+namespace TuneGames;
 
 [ShellMap<HistoryPage>]
 public partial class HistoryViewModel(IGameStore store, INavigator navigator) : ObservableObject, IPageLifecycleAware

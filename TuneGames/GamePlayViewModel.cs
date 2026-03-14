@@ -4,7 +4,7 @@ using Shiny.Music;
 using TuneGames.Models;
 using TuneGames.Services;
 
-namespace TuneGames.Pages.GamePlay;
+namespace TuneGames;
 
 [ShellMap<GamePlayPage>]
 public partial class GamePlayViewModel(

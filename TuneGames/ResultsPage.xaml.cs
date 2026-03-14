@@ -1,4 +1,4 @@
-namespace TuneGames.Pages.Results;
+namespace TuneGames;
 
 public partial class ResultsPage : ContentPage
 {

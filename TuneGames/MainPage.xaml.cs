@@ -1,4 +1,4 @@
-namespace TuneGames.Pages.Main;
+namespace TuneGames;
 
 public partial class MainPage : ContentPage
 {

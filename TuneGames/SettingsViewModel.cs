@@ -4,7 +4,7 @@ using Shiny;
 using TuneGames.Models;
 using TuneGames.Services;
 
-namespace TuneGames.Pages.Settings;
+namespace TuneGames;
 
 [ShellMap<SettingsPage>]
 public partial class SettingsViewModel(IGameStore store, IDialogs dialogs, INavigator navigator) : ObservableObject, IPageLifecycleAware

@@ -4,7 +4,7 @@ using Shiny;
 using TuneGames.Models;
 using TuneGames.Services;
 
-namespace TuneGames.Pages.Answer;
+namespace TuneGames;
 
 [ShellMap<AnswerPage>]
 public partial class AnswerViewModel(INavigator navigator, IGameEngine gameEngine, IGameStore store) : ObservableObject, IPageLifecycleAware

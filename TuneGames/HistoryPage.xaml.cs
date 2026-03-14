@@ -1,4 +1,4 @@
-namespace TuneGames.Pages.History;
+namespace TuneGames;
 
 public partial class HistoryPage : ContentPage
 {

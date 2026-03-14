@@ -1,4 +1,4 @@
-namespace TuneGames.Pages.Settings;
+namespace TuneGames;
 
 public partial class SettingsPage : ContentPage
 {

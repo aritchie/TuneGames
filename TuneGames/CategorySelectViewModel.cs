@@ -2,13 +2,18 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Shiny;
 using TuneGames.Models;
-using TuneGames.Pages.GamePlay;
+using TuneGames;
 using TuneGames.Services;
 
-namespace TuneGames.Pages.CategorySelect;
+namespace TuneGames;
 
 [ShellMap<CategorySelectPage>]
-public partial class CategorySelectViewModel(INavigator navigator, IGameStore store, IMusicService music) : ObservableObject, IPageLifecycleAware
+public partial class CategorySelectViewModel(
+    INavigator navigator, 
+    IDialogs dialogs,
+    IGameStore store, 
+    IMusicService music
+) : ObservableObject, IPageLifecycleAware
 {
     [ObservableProperty]
     List<CategoryItem> genres = [];
@@ -33,6 +38,7 @@ public partial class CategorySelectViewModel(INavigator navigator, IGameStore st
         this.IsLoading = true;
         try
         {
+
             var settings = await store.GetSettingsAsync();
             var minCount = settings.TotalChoices;
 
@@ -59,6 +65,10 @@ public partial class CategorySelectViewModel(INavigator navigator, IGameStore st
                 .Where(p => p.SongCount >= minCount)
                 .Select(p => new CategoryItem(p.Name, p.SongCount, PlaylistId: p.Id))
                 .ToList();
+        }
+        catch (Exception ex)
+        {
+            dialogs.Alert("Error Loading Categories", ex.ToString());
         }
         finally
         {

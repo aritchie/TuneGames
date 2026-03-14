@@ -1,4 +1,4 @@
-namespace TuneGames.Pages.Answer;
+namespace TuneGames;
 
 public partial class AnswerPage : ContentPage
 {

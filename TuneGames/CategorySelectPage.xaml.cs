@@ -1,4 +1,4 @@
-namespace TuneGames.Pages.CategorySelect;
+namespace TuneGames;
 
 public partial class CategorySelectPage : ContentPage
 {
