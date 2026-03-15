@@ -11,7 +11,7 @@ namespace TuneGames;
 public partial class CategorySelectViewModel(
     INavigator navigator, 
     IDialogs dialogs,
-    IGameStore store, 
+    GameSettings settings, 
     IMusicService music
 ) : ObservableObject, IPageLifecycleAware
 {
@@ -38,8 +38,6 @@ public partial class CategorySelectViewModel(
         this.IsLoading = true;
         try
         {
-
-            var settings = await store.GetSettingsAsync();
             var minCount = settings.TotalChoices;
 
             var genreResults = await music.GetGenresAsync();

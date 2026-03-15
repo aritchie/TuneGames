@@ -66,7 +66,7 @@ public class CarPlayGameManager
             var services = IPlatformApplication.Current!.Services;
             this.scope = services.CreateScope();
             var engine = this.scope.ServiceProvider.GetRequiredService<IGameEngine>();
-            var settings = await this.scope.ServiceProvider.GetRequiredService<IGameStore>().GetSettingsAsync();
+            var settings = this.scope.ServiceProvider.GetRequiredService<GameSettings>();
 
             this.round = await engine.StartRoundAsync(
                 categoryName,

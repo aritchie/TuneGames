@@ -11,7 +11,7 @@ public partial class GamePlayViewModel(
     INavigator navigator,
     IDialogs dialogs,
     IGameEngine gameEngine,
-    IGameStore store
+    GameSettings settings
 ) : ObservableObject, IPageLifecycleAware, INavigationConfirmation
 {
     CancellationTokenSource? playCts;
@@ -58,7 +58,7 @@ public partial class GamePlayViewModel(
     public async Task<bool> CanNavigate()
         => await dialogs.Confirm("Exit Game", "Are you sure you want to quit?");
 
-    public async void OnAppearing() => await this.StartRound();
+    public void OnAppearing() => _ = this.StartRound();
 
     public void OnDisappearing()
     {
@@ -73,7 +73,6 @@ public partial class GamePlayViewModel(
             this.Phase = GamePhase.Loading;
             this.StatusText = "AI is picking songs...";
 
-            var settings = await store.GetSettingsAsync();
             this.TotalSongs = settings.SongsPerRound;
 
             this.round = await gameEngine.StartRoundAsync(
@@ -106,7 +105,7 @@ public partial class GamePlayViewModel(
         }
         catch (Exception ex)
         {
-            await dialogs.Alert("Error", ex.Message);
+            await dialogs.Alert("Error", ex.ToString());
             await navigator.GoBack();
         }
     }

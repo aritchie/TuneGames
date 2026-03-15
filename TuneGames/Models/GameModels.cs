@@ -1,3 +1,5 @@
+using TuneGames.Services;
+
 namespace TuneGames.Models;
 
 public record SongChoice(

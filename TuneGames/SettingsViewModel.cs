@@ -7,7 +7,7 @@ using TuneGames.Services;
 namespace TuneGames;
 
 [ShellMap<SettingsPage>]
-public partial class SettingsViewModel(IGameStore store, IDialogs dialogs, INavigator navigator) : ObservableObject, IPageLifecycleAware
+public partial class SettingsViewModel(GameSettings settings, IGameStore store, IDialogs dialogs, INavigator navigator) : ObservableObject, IPageLifecycleAware
 {
     [ObservableProperty]
     int songsPerRound;
@@ -24,9 +24,8 @@ public partial class SettingsViewModel(IGameStore store, IDialogs dialogs, INavi
     [ObservableProperty]
     int pauseBetweenClips;
 
-    public async void OnAppearing()
+    public void OnAppearing()
     {
-        var settings = await store.GetSettingsAsync();
         this.SongsPerRound = settings.SongsPerRound;
         this.ClipDuration = settings.ClipDurationSeconds;
         this.TotalChoices = settings.TotalChoices;
@@ -39,15 +38,11 @@ public partial class SettingsViewModel(IGameStore store, IDialogs dialogs, INavi
     [RelayCommand]
     async Task Save()
     {
-        var settings = new GameSettings
-        {
-            SongsPerRound = this.SongsPerRound,
-            ClipDurationSeconds = this.ClipDuration,
-            TotalChoices = this.TotalChoices,
-            AnswerTimeLimitSeconds = this.AnswerTimeLimit,
-            PauseBetweenClipsSeconds = this.PauseBetweenClips
-        };
-        await store.SaveSettingsAsync(settings);
+        settings.SongsPerRound = this.SongsPerRound;
+        settings.ClipDurationSeconds = this.ClipDuration;
+        settings.TotalChoices = this.TotalChoices;
+        settings.AnswerTimeLimitSeconds = this.AnswerTimeLimit;
+        settings.PauseBetweenClipsSeconds = this.PauseBetweenClips;
         await dialogs.Alert("Saved", "Settings updated successfully.");
     }
 

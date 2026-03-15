@@ -17,7 +17,7 @@ public interface IAiSongPicker
     );
 }
 
-public class AiSongPicker(IGameStore store, IChatClient chatClient) : IAiSongPicker
+public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
 {
     // async Task<IChatClient> GetChatClientAsync()
     // {

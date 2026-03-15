@@ -40,8 +40,8 @@ public class CarPlayMenuManager
             var services = IPlatformApplication.Current!.Services;
             var store = services.GetRequiredService<IGameStore>();
             var music = services.GetRequiredService<IMusicService>();
+            var settings = services.GetRequiredService<GameSettings>();
 
-            var settings = await store.GetSettingsAsync();
             var minCount = settings.TotalChoices;
 
             var genres = await music.GetGenresAsync();

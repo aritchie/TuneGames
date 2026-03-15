@@ -42,6 +42,8 @@ public static class MauiProgram
                 .GetChatClient(builder.Configuration["AzureOpenAiModel"]!)
                 .AsIChatClient()
         );
+        builder.Services.AddShinyStores();
+        builder.Services.AddPersistentService<GameSettings>();
 
         builder.Services.AddSingleton<IMusicService, MusicService>();
         builder.Services.AddSingleton<IAiSongPicker, AiSongPicker>();
