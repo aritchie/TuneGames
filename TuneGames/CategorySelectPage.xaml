@@ -5,145 +5,70 @@
              xmlns:m="clr-namespace:TuneGames.Models"
              x:Class="TuneGames.CategorySelectPage"
              x:DataType="vm:CategorySelectViewModel"
-             Title="Choose Category">
+             Title="Choose Category"
+             Padding="20">
 
-    <ScrollView Padding="20">
-        <VerticalStackLayout Spacing="16">
+    <Grid>
 
-            <Label Text="Pick a category for this round"
-                   FontSize="18"
-                   Opacity="0.7"
-                   Margin="0,10,0,4" />
+        <CollectionView ItemsSource="{Binding Groups}"
+                        IsGrouped="True"
+                        SelectionMode="None">
 
-            <!-- Playlists -->
-            <Label Text="Playlists"
-                   FontSize="22" FontAttributes="Bold"
-                   IsVisible="{Binding Playlists.Count, Converter={StaticResource IntToBoolConverter}}" />
-            <CollectionView ItemsSource="{Binding Playlists}"
-                            SelectionMode="None"
-                            IsVisible="{Binding Playlists.Count, Converter={StaticResource IntToBoolConverter}}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="m:CategoryItem">
-                        <Border Margin="0,4" Padding="16"
-                               StrokeShape="RoundRectangle 10"
-                               Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
-                               BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
-                                    CommandParameter="{Binding}" />
-                            </Border.GestureRecognizers>
-                            <Grid ColumnDefinitions="*,Auto">
-                                <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
-                                <Label Grid.Column="1" FontSize="14" Opacity="0.6"
-                                       VerticalOptions="Center">
-                                    <Label.Text>
-                                        <Binding Path="TrackCount" StringFormat="{}{0} songs" />
-                                    </Label.Text>
-                                </Label>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <CollectionView.Header>
+                <Label Text="Pick a category for this round"
+                       FontSize="18"
+                       Opacity="0.7"
+                       Margin="0,10,0,4" />
+            </CollectionView.Header>
 
-            <!-- Genres -->
-            <Label Text="Genres"
-                   FontSize="22" FontAttributes="Bold"
-                   IsVisible="{Binding Genres.Count, Converter={StaticResource IntToBoolConverter}}" />
-            <CollectionView ItemsSource="{Binding Genres}"
-                            SelectionMode="None"
-                            IsVisible="{Binding Genres.Count, Converter={StaticResource IntToBoolConverter}}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="m:CategoryItem">
-                        <Border Margin="0,4" Padding="16"
-                               StrokeShape="RoundRectangle 10"
-                               Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
-                               BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
-                                    CommandParameter="{Binding}" />
-                            </Border.GestureRecognizers>
-                            <Grid ColumnDefinitions="*,Auto">
-                                <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
-                                <Label Grid.Column="1" FontSize="14" Opacity="0.6"
-                                       VerticalOptions="Center">
-                                    <Label.Text>
-                                        <Binding Path="TrackCount" StringFormat="{}{0} songs" />
-                                    </Label.Text>
-                                </Label>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="vm:CategoryGroup">
+                    <Label Text="{Binding Name}"
+                           FontSize="22" FontAttributes="Bold"
+                           Margin="0,16,0,4" />
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
 
-            <!-- Decades -->
-            <Label Text="Decades"
-                   FontSize="22" FontAttributes="Bold"
-                   IsVisible="{Binding Decades.Count, Converter={StaticResource IntToBoolConverter}}" />
-            <CollectionView ItemsSource="{Binding Decades}"
-                            SelectionMode="None"
-                            IsVisible="{Binding Decades.Count, Converter={StaticResource IntToBoolConverter}}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="m:CategoryItem">
-                        <Border Margin="0,4" Padding="16"
-                               StrokeShape="RoundRectangle 10"
-                               Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
-                               BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
-                                    CommandParameter="{Binding}" />
-                            </Border.GestureRecognizers>
-                            <Grid ColumnDefinitions="*,Auto">
-                                <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
-                                <Label Grid.Column="1" FontSize="14" Opacity="0.6"
-                                       VerticalOptions="Center">
-                                    <Label.Text>
-                                        <Binding Path="TrackCount" StringFormat="{}{0} songs" />
-                                    </Label.Text>
-                                </Label>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="m:CategoryItem">
+                    <Border Margin="0,4" Padding="16"
+                           StrokeShape="RoundRectangle 10"
+                           Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
+                           BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
+                                CommandParameter="{Binding}" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
+                            <Label Grid.Column="1" FontSize="14" Opacity="0.6"
+                                   VerticalOptions="Center">
+                                <Label.Text>
+                                    <Binding Path="TrackCount" StringFormat="{}{0} songs" />
+                                </Label.Text>
+                            </Label>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
 
-            <!-- Years -->
-            <Label Text="Years"
-                   FontSize="22" FontAttributes="Bold"
-                   IsVisible="{Binding Years.Count, Converter={StaticResource IntToBoolConverter}}" />
-            <CollectionView ItemsSource="{Binding Years}"
-                            SelectionMode="None"
-                            IsVisible="{Binding Years.Count, Converter={StaticResource IntToBoolConverter}}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="m:CategoryItem">
-                        <Border Margin="0,4" Padding="16"
-                               StrokeShape="RoundRectangle 10"
-                               Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
-                               BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
-                            <Border.GestureRecognizers>
-                                <TapGestureRecognizer
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
-                                    CommandParameter="{Binding}" />
-                            </Border.GestureRecognizers>
-                            <Grid ColumnDefinitions="*,Auto">
-                                <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
-                                <Label Grid.Column="1" FontSize="14" Opacity="0.6"
-                                       VerticalOptions="Center">
-                                    <Label.Text>
-                                        <Binding Path="TrackCount" StringFormat="{}{0} songs" />
-                                    </Label.Text>
-                                </Label>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+        </CollectionView>
 
-        </VerticalStackLayout>
-    </ScrollView>
+        <!-- Loading overlay -->
+        <Grid IsVisible="{Binding IsLoading}"
+              BackgroundColor="{AppThemeBinding Light=#80FFFFFF, Dark=#80000000}">
+            <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="12">
+                <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                   HeightRequest="48" WidthRequest="48"
+                                   Color="{AppThemeBinding Light=#512BD4, Dark=#7C4DFF}" />
+                <Label Text="Loading categories…"
+                       FontSize="16"
+                       HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light=#512BD4, Dark=#7C4DFF}" />
+            </VerticalStackLayout>
+        </Grid>
+
+    </Grid>
 
 </ContentPage>

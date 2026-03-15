@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Shiny;
@@ -16,16 +17,7 @@ public partial class CategorySelectViewModel(
 ) : ObservableObject, IPageLifecycleAware
 {
     [ObservableProperty]
-    List<CategoryItem> genres = [];
-
-    [ObservableProperty]
-    List<CategoryItem> decades = [];
-
-    [ObservableProperty]
-    List<CategoryItem> years = [];
-
-    [ObservableProperty]
-    List<CategoryItem> playlists = [];
+    ObservableCollection<CategoryGroup> groups = [];
 
     [ObservableProperty]
     bool isLoading;
@@ -39,30 +31,41 @@ public partial class CategorySelectViewModel(
         try
         {
             var minCount = settings.TotalChoices;
-
-            var genreResults = await music.GetGenresAsync();
-            this.Genres = genreResults
-                .Where(g => g.Count >= minCount)
-                .Select(g => new CategoryItem(g.Value, g.Count, Genre: g.Value))
-                .ToList();
-
-            var decadeResults = await music.GetDecadesAsync();
-            this.Decades = decadeResults
-                .Where(d => d.Count >= minCount)
-                .Select(d => new CategoryItem($"{d.Value}s", d.Count, Decade: d.Value))
-                .ToList();
-
-            var yearResults = await music.GetYearsAsync();
-            this.Years = yearResults
-                .Where(y => y.Count >= minCount)
-                .Select(y => new CategoryItem(y.Value.ToString(), y.Count, Year: y.Value))
-                .ToList();
+            var groups = new List<CategoryGroup>();
 
             var playlistResults = await music.GetPlaylistsAsync();
-            this.Playlists = playlistResults
+            var playlists = playlistResults
                 .Where(p => p.SongCount >= minCount)
                 .Select(p => new CategoryItem(p.Name, p.SongCount, PlaylistId: p.Id))
                 .ToList();
+            if (playlists.Count > 0)
+                groups.Add(new CategoryGroup("Playlists", playlists));
+
+            var genreResults = await music.GetGenresAsync();
+            var genres = genreResults
+                .Where(g => g.Count >= minCount)
+                .Select(g => new CategoryItem(g.Value, g.Count, Genre: g.Value))
+                .ToList();
+            if (genres.Count > 0)
+                groups.Add(new CategoryGroup("Genres", genres));
+
+            var decadeResults = await music.GetDecadesAsync();
+            var decades = decadeResults
+                .Where(d => d.Count >= minCount)
+                .Select(d => new CategoryItem($"{d.Value}s", d.Count, Decade: d.Value))
+                .ToList();
+            if (decades.Count > 0)
+                groups.Add(new CategoryGroup("Decades", decades));
+
+            var yearResults = await music.GetYearsAsync();
+            var years = yearResults
+                .Where(y => y.Count >= minCount)
+                .Select(y => new CategoryItem(y.Value.ToString(), y.Count, Year: y.Value))
+                .ToList();
+            if (years.Count > 0)
+                groups.Add(new CategoryGroup("Years", years));
+
+            this.Groups = new ObservableCollection<CategoryGroup>(groups);
         }
         catch (Exception ex)
         {
@@ -84,4 +87,9 @@ public partial class CategorySelectViewModel(
             vm.Year = item.Year;
             vm.PlaylistId = item.PlaylistId;
         });
+}
+
+public class CategoryGroup(string name, List<CategoryItem> items) : ObservableCollection<CategoryItem>(items)
+{
+    public string Name { get; } = name;
 }
