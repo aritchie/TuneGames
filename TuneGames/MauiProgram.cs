@@ -19,15 +19,22 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseShinyShell(x => x.AddGeneratedMaps())
             .UseShinyTableView()
+#if !DEBUG
+            .UseSentry(x => x.Dsn = builder.Configuration["SentryDsn"]!)
+#endif
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
+        
+#if DEBUG
+        builder.Logging.SetMinimumLevel(LogLevel.Trace);
+        builder.Logging.AddDebug();
+#endif
 
         builder.Configuration.AddJsonPlatformBundle();
         builder.Services.AddShinyMusic();
-
         builder.Services.AddSqliteDocumentStore(config =>
         {
             config.JsonSerializerOptions = AppJsonContext.Default.Options;
@@ -49,11 +56,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<IAiSongPicker, AiSongPicker>();
         builder.Services.AddSingleton<IGameEngine, GameEngine>();
         builder.Services.AddSingleton<IGameStore, GameStore>();
-
-#if DEBUG
-        builder.Logging.SetMinimumLevel(LogLevel.Trace);
-        builder.Logging.AddDebug();
-#endif
 
         return builder.Build();
     }

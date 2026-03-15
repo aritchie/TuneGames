@@ -22,6 +22,17 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
+    <PropertyGroup Condition="'$(CI)' == 'true' AND '$(Configuration)' == 'Release'">
+        <SentryOrg>shiny-software</SentryOrg>
+        <SentryProject>tunegames</SentryProject>
+
+        <SentryCreateRelease>false</SentryCreateRelease>
+        <SentrySetCommits>false</SentrySetCommits>
+        <SentryUploadSymbols>true</SentryUploadSymbols>
+        <SentryUploadSources>true</SentryUploadSources>
+        <SentryUploadAndroidProguardMapping>true</SentryUploadAndroidProguardMapping>
+    </PropertyGroup>
+
 	<ItemGroup>
 		<CustomEntitlements Include="com.apple.developer.carplay-driving-task"
 		                    Type="Boolean"
@@ -45,6 +56,7 @@
 		<PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.4" Condition="'$(Configuration)' == 'DEBUG'"/>
+		<PackageReference Include="Sentry.Maui" Version="6.2.0" />
 		<PackageReference Include="Shiny.Extensions.MauiHosting" Version="2.0.0" />
         <PackageReference Include="Shiny.Extensions.Configuration" Version="4.0.0-beta-0095" />
         <PackageReference Include="Shiny.Reflector" Version="1.7.1"/>
