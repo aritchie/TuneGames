@@ -11,6 +11,7 @@ public partial class GamePlayViewModel(
     INavigator navigator,
     IDialogs dialogs,
     IGameEngine gameEngine,
+    IMusicService music,
     GameSettings settings
 ) : ObservableObject, IPageLifecycleAware, INavigationConfirmation
 {
@@ -56,7 +57,18 @@ public partial class GamePlayViewModel(
     GamePhase phase = GamePhase.Loading;
 
     public async Task<bool> CanNavigate()
-        => await dialogs.Confirm("Exit Game", "Are you sure you want to quit?");
+    {
+        music.Pause();
+        var confirmed = await dialogs.Confirm("Exit Game", "Are you sure you want to quit?");
+        if (confirmed)
+        {
+            this.playCts?.Cancel();
+            await navigator.PopToRoot();
+            return false;
+        }
+        music.Resume();
+        return false;
+    }
 
     public void OnAppearing() => _ = this.StartRound();
 

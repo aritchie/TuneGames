@@ -17,6 +17,7 @@ public interface IMusicService
     Task PlayTrackAsync(MusicMetadata track);
     Task PlayClipAsync(MusicMetadata track, TimeSpan duration);
     void Pause();
+    void Resume();
     void Stop();
     event Action? PlaybackCompleted;
 }
@@ -102,5 +103,6 @@ public class MusicService : IMusicService
     }
 
     public void Pause() => this.player.Pause();
+    public void Resume() => this.player.Resume();
     public void Stop() => this.player.Stop();
 }
