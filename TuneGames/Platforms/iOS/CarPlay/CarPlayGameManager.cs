@@ -42,6 +42,24 @@ public class CarPlayGameManager
         this.interfaceController.PushTemplate(template, true, null);
     }
 
+    void ConfirmAnswerExit()
+    {
+        var alert = new CPAlertTemplate(
+            ["Are you sure you want to quit?"],
+            [
+                new CPAlertAction("Quit", CPAlertActionStyle.Destructive, _ =>
+                {
+                    this.interfaceController.DismissTemplate(true, null);
+                    this.Cleanup();
+                    this.onGameExit();
+                }),
+                new CPAlertAction("Cancel", CPAlertActionStyle.Cancel, _ =>
+                    this.interfaceController.DismissTemplate(true, null))
+            ]
+        );
+        this.interfaceController.PresentTemplate(alert, true, null);
+    }
+
     void ConfirmExit()
     {
         var alert = new CPAlertTemplate(
@@ -163,7 +181,7 @@ public class CarPlayGameManager
         var submitButton = new CPBarButton("Submit", _ => this.SubmitAnswers());
 
         var template = new CPListTemplate("🧠 Name That Tune!", [section]);
-        template.BackButton = new CPBarButton("Cancel", _ => this.ConfirmExit());
+        template.BackButton = new CPBarButton("Quit", _ => this.ConfirmAnswerExit());
         template.TrailingNavigationBarButtons = [submitButton];
         return template;
     }

@@ -28,7 +28,9 @@
 	</array>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
-	<key>NSAppleMusicUsageDescription</key>
+    <key>ITSAppUsesNonExemptEncryption</key>
+    <false/>
+    <key>NSAppleMusicUsageDescription</key>
 	<string>TuneGames needs access to your music library to play music trivia games.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

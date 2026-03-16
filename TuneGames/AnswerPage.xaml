@@ -5,7 +5,7 @@
              x:Class="TuneGames.AnswerPage"
              x:DataType="vm:AnswerViewModel"
              Title="Name That Tune!"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="True">
 
     <Grid RowDefinitions="Auto,*,Auto" Padding="20">
 

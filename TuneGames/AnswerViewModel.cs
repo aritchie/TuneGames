@@ -7,7 +7,7 @@ using TuneGames.Services;
 namespace TuneGames;
 
 [ShellMap<AnswerPage>]
-public partial class AnswerViewModel(INavigator navigator, IGameEngine gameEngine, IGameStore store) : ObservableObject, IPageLifecycleAware
+public partial class AnswerViewModel(INavigator navigator, IDialogs dialogs, IGameEngine gameEngine, IGameStore store) : ObservableObject, IPageLifecycleAware, INavigationConfirmation
 {
     IDispatcherTimer? timer;
     int totalTime;
@@ -72,6 +72,19 @@ public partial class AnswerViewModel(INavigator navigator, IGameEngine gameEngin
             }
         };
         this.timer.Start();
+    }
+
+    public async Task<bool> CanNavigate()
+    {
+        this.timer?.Stop();
+        var exit = await dialogs.Confirm("Exit Game", "Are you sure you want to quit?");
+        if (exit)
+        {
+            await navigator.PopToRoot();
+            return false;
+        }
+        this.timer?.Start();
+        return false;
     }
 
     public void OnAppearing() { }
