@@ -85,8 +85,6 @@ public partial class GamePlayViewModel(
             this.Phase = GamePhase.Loading;
             this.StatusText = "AI is picking songs...";
 
-            this.TotalSongs = settings.SongsPerRound;
-
             this.round = await gameEngine.StartRoundAsync(
                 this.CategoryName,
                 new MusicFilter { Genre = this.Genre, Decade = this.Decade, Year = this.Year },
@@ -95,6 +93,7 @@ public partial class GamePlayViewModel(
             );
 
             this.Phase = GamePhase.Playing;
+            this.TotalSongs = this.round.Picks.SongsToPlay.Count;
             this.StatusText = "Listen carefully!";
 
             this.playCts = new CancellationTokenSource();

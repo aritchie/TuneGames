@@ -40,7 +40,11 @@ public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
         int totalChoices)
     {
         //var chatClient = await GetChatClientAsync();
-        var trackList = availableTracks
+        var shuffled = availableTracks
+            .OrderBy(_ => Random.Shared.Next())
+            .ToList();
+        
+        var trackList = shuffled
             .Select(t => new { t.Id, t.Title, t.Artist, t.Album })
             .ToList();
 
@@ -56,7 +60,7 @@ public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
             {trackJson}
 
             Instructions:
-            1. Select exactly {songsToPlay} songs that best match the category "{category}" - these will be PLAYED
+            1. Select exactly {songsToPlay} songs that match the category "{category}" - these will be PLAYED. Vary your picks each time - do not always choose the most obvious matches.
             2. Select {totalChoices - songsToPlay} additional songs as DECOYS that do NOT match as well but are plausible
             3. Return a JSON object with:
                - "playIds": array of {songsToPlay} song IDs to play (best matches)
@@ -94,6 +98,22 @@ public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
             .Where(trackLookup.ContainsKey)
             .Select(id => ToSongChoice(trackLookup[id], isCorrect: false))
             .ToList();
+
+        // Backfill if AI returned fewer valid play IDs than requested
+        if (songsToPlayList.Count < songsToPlay)
+        {
+            var usedIds = new HashSet<string>(
+                songsToPlayList.Select(s => s.Id)
+                    .Concat(decoys.Select(s => s.Id))
+            );
+            var fillers = availableTracks
+                .Where(t => !usedIds.Contains(t.Id))
+                .OrderBy(_ => Random.Shared.Next())
+                .Take(songsToPlay - songsToPlayList.Count)
+                .Select(t => ToSongChoice(t, isCorrect: true))
+                .ToList();
+            songsToPlayList.AddRange(fillers);
+        }
 
         var allChoices = songsToPlayList
             .Concat(decoys)
