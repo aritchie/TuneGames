@@ -1,4 +1,4 @@
-using Shiny.SqliteDocumentDb;
+using Shiny.DocumentDb;
 using TuneGames.Models;
 
 namespace TuneGames.Services;

@@ -41,7 +41,7 @@ public class GameEngine(IMusicService music, IAiSongPicker aiPicker) : IGameEngi
         CancellationToken ct = default)
     {
         var tracks = await music.GetAllTracksAsync();
-        var trackLookup = tracks.ToDictionary(t => t.Id);
+        var trackLookup = tracks.DistinctBy(t => t.Id).ToDictionary(t => t.Id);
         var clipDuration = TimeSpan.FromSeconds(round.Settings.ClipDurationSeconds);
         var pauseDuration = TimeSpan.FromSeconds(round.Settings.PauseBetweenClipsSeconds);
 

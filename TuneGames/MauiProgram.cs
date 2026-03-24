@@ -3,9 +3,10 @@ using Azure.AI.OpenAI;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Shiny.DocumentDb;
+using Shiny.DocumentDb.Sqlite;
 using Shiny.Maui.TableView;
 using Shiny.Music;
-using Shiny.SqliteDocumentDb;
 using TuneGames.Services;
 
 namespace TuneGames;
@@ -35,11 +36,13 @@ public static class MauiProgram
 
         builder.Configuration.AddJsonPlatformBundle();
         builder.Services.AddShinyMusic();
-        builder.Services.AddSqliteDocumentStore(config =>
+        builder.Services.AddDocumentStore(config =>
         {
+            var dbPath = Path.Combine(FileSystem.AppDataDirectory, "tunegames.db");
+            config.DatabaseProvider = new SqliteDatabaseProvider($"Data Source={dbPath}");
             config.JsonSerializerOptions = AppJsonContext.Default.Options;
             config.UseReflectionFallback = false;
-            config.ConnectionString = $"Data Source={Path.Combine(FileSystem.AppDataDirectory, "tunegames.db")}";
+            
         });
 
         builder.Services.AddSingleton(_ =>

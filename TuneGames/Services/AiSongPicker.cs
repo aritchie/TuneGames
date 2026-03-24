@@ -87,7 +87,7 @@ public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
         if (result == null)
             throw new InvalidOperationException("AI returned invalid response");
 
-        var trackLookup = availableTracks.ToDictionary(t => t.Id);
+        var trackLookup = availableTracks.DistinctBy(t => t.Id).ToDictionary(t => t.Id);
 
         var songsToPlayList = result.PlayIds
             .Where(trackLookup.ContainsKey)

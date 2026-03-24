@@ -51,19 +51,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
-		<PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.4.0" />
+		<PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.4.1" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.4" Condition="'$(Configuration)' == 'DEBUG'"/>
 		<PackageReference Include="Sentry.Maui" Version="6.2.0" />
-		<PackageReference Include="Shiny.Extensions.MauiHosting" Version="2.0.0" />
+        <PackageReference Include="Shiny.Extensions.Stores" Version="2.0.3"/>
+        <PackageReference Include="Shiny.Extensions.MauiHosting" Version="2.0.3" />
         <PackageReference Include="Shiny.Extensions.Configuration" Version="4.0.0-beta-0095" />
         <PackageReference Include="Shiny.Reflector" Version="1.7.1"/>
-        <PackageReference Include="Shiny.Extensions.Stores" Version="2.0.0"/>
 		<PackageReference Include="Shiny.Maui.Shell" Version="3.1.1" />
 		<PackageReference Include="Shiny.Maui.TableView" Version="1.0.2" />
 		<PackageReference Include="Shiny.Music" Version="1.3.0" />
-		<PackageReference Include="Shiny.SqliteDocumentDb" Version="1.0.0" />
+		<PackageReference Include="Shiny.DocumentDb.Sqlite" Version="3.0.1" />
+        <PackageReference Include="Shiny.DocumentDb.Extensions.DependencyInjection" Version="3.0.1" />
 	</ItemGroup>
 </Project>
