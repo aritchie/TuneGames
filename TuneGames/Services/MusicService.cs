@@ -75,26 +75,28 @@ public class MusicService : IMusicService
 
     public async Task PlayClipAsync(MusicMetadata track, TimeSpan duration)
     {
-        this.clipTcs = new TaskCompletionSource();
+        this.player.Stop();
 
-        await this.player.PlayAsync(track);
+        var tcs = new TaskCompletionSource();
+        this.clipTcs = tcs;
 
         using var cts = new CancellationTokenSource(duration);
         cts.Token.Register(() =>
         {
             this.player.Stop();
-            this.clipTcs?.TrySetResult();
+            tcs.TrySetResult();
         });
 
         void OnComplete(object? sender, EventArgs e)
         {
-            this.clipTcs?.TrySetResult();
+            tcs.TrySetResult();
         }
         this.player.PlaybackCompleted += OnComplete;
 
         try
         {
-            await this.clipTcs.Task;
+            await this.player.PlayAsync(track);
+            await tcs.Task;
         }
         finally
         {
