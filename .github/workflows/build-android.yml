@@ -21,24 +21,25 @@ env:
   APP_PROJECT: './TuneGames/TuneGames.csproj'
   APP_VERSION: '1.0'
   DOTNET_TFM: 'net10.0'
-  DOTNET_VERSION: '10.0.102'
+  DOTNET_VERSION: '10.0.300'
   APPSETTINGS_JSON_FILE: './TuneGames/appsettings.json'
   PACKAGE_NAME: 'com.shinysoft.tunegames'
   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
  
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-26
     # runs-on: [self-hosted, macOS]
     
     steps:
     - name: '✅ Checkout'
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
+        workloads: maui-ios, maui-android
         
       # https://github.com/marketplace/actions/substitute-secrets-into-tokenised-file
     - name: Configure From Secrets
@@ -47,9 +48,6 @@ jobs:
         file: ${{ env.APPSETTINGS_JSON_FILE }}
         tokenPattern: ${TOKEN}
         secretsJson: ${{ toJSON(secrets) }}
-        
-    - name: Add .NET Workloads
-      run: dotnet workload install maui-ios maui-android
         
     - name: Write Keystore to file
       run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > app.keystore
