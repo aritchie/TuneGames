@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Shiny.DocumentDb;
 using Shiny.DocumentDb.Sqlite;
-using Shiny.Maui.TableView;
-using Shiny.Music;
 using TuneGames.Services;
 
 namespace TuneGames;

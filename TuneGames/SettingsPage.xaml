@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:tv="http://shiny.net/maui/tableview"
              xmlns:vm="clr-namespace:TuneGames"
+             xmlns:shiny="http://shiny.net/maui/controls"
              x:Class="TuneGames.SettingsPage"
              x:DataType="vm:SettingsViewModel"
              Title="Settings">
 
     <Grid RowDefinitions="*,Auto" Padding="0">
         <ScrollView>
-            <tv:TableView>
-                <tv:TableRoot>
+            <shiny:TableView>
+                <shiny:TableRoot>
 
                     <!-- Game Settings -->
-                    <tv:TableSection Title="Game Settings">
-                        <tv:NumberPickerCell Title="Songs per Round"
+                    <shiny:TableSection Title="Game Settings">
+                        <shiny:NumberPickerCell Title="Songs per Round"
                                               Min="2" Max="10"
                                               Number="{Binding SongsPerRound, Mode=TwoWay}" />
-                        <tv:NumberPickerCell Title="Clip Duration (sec)"
+                        <shiny:NumberPickerCell Title="Clip Duration (sec)"
                                               Min="5" Max="30"
                                               Number="{Binding ClipDuration, Mode=TwoWay}" />
-                        <tv:NumberPickerCell Title="Total Choices"
+                        <shiny:NumberPickerCell Title="Total Choices"
                                               Min="4" Max="20"
                                               Number="{Binding TotalChoices, Mode=TwoWay}" />
-                        <tv:NumberPickerCell Title="Answer Time (sec)"
+                        <shiny:NumberPickerCell Title="Answer Time (sec)"
                                               Min="10" Max="120"
                                               Number="{Binding AnswerTimeLimit, Mode=TwoWay}" />
-                        <tv:NumberPickerCell Title="Pause Between (sec)"
+                        <shiny:NumberPickerCell Title="Pause Between (sec)"
                                               Min="1" Max="5"
                                               Number="{Binding PauseBetweenClips, Mode=TwoWay}" />
-                    </tv:TableSection>
+                    </shiny:TableSection>
 
                     <!-- Data -->
-                    <tv:TableSection Title="Data">
-                        <tv:CommandCell Title="Clear Game History"
+                    <shiny:TableSection Title="Data">
+                        <shiny:CommandCell Title="Clear Game History"
                                          Command="{Binding ClearHistoryCommand}"
                                          ShowArrow="False" />
-                    </tv:TableSection>
+                    </shiny:TableSection>
 
-                </tv:TableRoot>
-            </tv:TableView>
+                </shiny:TableRoot>
+            </shiny:TableView>
         </ScrollView>
 
         <Button Grid.Row="1"
