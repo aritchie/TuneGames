@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="TuneGames.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:main="clr-namespace:TuneGames"
-    Title="TuneGames">
+<shiny:ShinyShell x:Class="TuneGames.AppShell"
+                  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:main="clr-namespace:TuneGames"
+                  xmlns:shiny="clr-namespace:Shiny;assembly=Shiny.Maui.Shell"
+                  Title="TuneGames">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate main:MainPage}"
-        Route="Main" />
+    <ShellContent Title="Home"
+                  ContentTemplate="{DataTemplate main:MainPage}"
+                  Route="Main" />
 
-</Shell>
+</shiny:ShinyShell>

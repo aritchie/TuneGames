@@ -16,7 +16,7 @@
 
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
-		<MauiVersion>10.0.50</MauiVersion>
+		<MauiVersion>10.0.60</MauiVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
@@ -44,27 +44,28 @@
 		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#1A0536" BaseSize="168,168" />
 		<MauiFont Include="Resources\Fonts\*" />
-
-        <MauiAsset Include="appsettings.json" LogicalName="appsettings.json"/>
-        <Content Remove="**\appsettings.json"/>
-        <Content Remove="**\appsettings.*.json"/>
 	</ItemGroup>
 
+    <ItemGroup>
+        <None Remove="appsettings.json"/>
+        <EmbeddedResource Include="appsettings.json"/>
+    </ItemGroup>
+
 	<ItemGroup>
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.8" Condition="'$(Configuration)' == 'DEBUG'"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.8"/>
+        <PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.6.0" />
+        <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
 		<PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
-		<PackageReference Include="Microsoft.Extensions.AI.OpenAI" Version="10.4.1" />
-		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.4" Condition="'$(Configuration)' == 'DEBUG'"/>
-		<PackageReference Include="Sentry.Maui" Version="6.2.0" />
-        <PackageReference Include="Shiny.Extensions.Stores" Version="2.0.3"/>
-        <PackageReference Include="Shiny.Extensions.MauiHosting" Version="2.0.3" />
-        <PackageReference Include="Shiny.Extensions.Configuration" Version="4.0.0-beta-0095" />
-        <PackageReference Include="Shiny.Reflector" Version="1.7.1"/>
-		<PackageReference Include="Shiny.Maui.Shell" Version="3.1.1" />
-		<PackageReference Include="Shiny.Maui.TableView" Version="1.0.2" />
-		<PackageReference Include="Shiny.Music" Version="1.3.0" />
-		<PackageReference Include="Shiny.DocumentDb.Sqlite" Version="3.0.1" />
-        <PackageReference Include="Shiny.DocumentDb.Extensions.DependencyInjection" Version="3.0.1" />
+		<PackageReference Include="Sentry.Maui" Version="6.5.0" />
+        <PackageReference Include="Shiny.Extensions.Stores" Version="3.0.0"/>
+        <PackageReference Include="Shiny.Extensions.MauiHosting" Version="3.0.0" />
+        <PackageReference Include="Shiny.Reflector" Version="1.7.2"/>
+		<PackageReference Include="Shiny.Maui.Shell" Version="6.0.3" />
+		<PackageReference Include="Shiny.Maui.Controls" Version="1.0.1-beta-0077" />
+		<PackageReference Include="Shiny.Music" Version="3.0.0" />
+		<PackageReference Include="Shiny.DocumentDb.Sqlite" Version="5.0.0" />
+        <PackageReference Include="Shiny.DocumentDb.Extensions.DependencyInjection" Version="5.0.0" />
 	</ItemGroup>
 </Project>

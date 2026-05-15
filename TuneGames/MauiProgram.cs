@@ -16,10 +16,16 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
+        builder.Configuration.AddJsonStream(
+            typeof(MauiProgram)
+                .Assembly
+                .GetManifestResourceStream("BeatTheBank.appsettings.json")!
+        );
+        
         builder
             .UseMauiApp<App>()
             .UseShinyShell(x => x.AddGeneratedMaps())
-            .UseShinyTableView()
+            .UseShinyControls(x => x.AddDefaultMauiControlFeedback())
 #if !DEBUG
             .UseSentry(x => x.Dsn = builder.Configuration["SentryDsn"]!)
 #endif
@@ -34,7 +40,6 @@ public static class MauiProgram
         builder.Logging.AddDebug();
 #endif
 
-        builder.Configuration.AddJsonPlatformBundle();
         builder.Services.AddShinyMusic();
         builder.Services.AddDocumentStore(config =>
         {
