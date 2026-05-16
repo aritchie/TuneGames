@@ -64,7 +64,7 @@
         <PackageReference Include="Shiny.Reflector" Version="1.7.2"/>
 		<PackageReference Include="Shiny.Maui.Shell" Version="6.0.3" />
 		<PackageReference Include="Shiny.Maui.Controls" Version="1.0.1-beta-0077" />
-		<PackageReference Include="Shiny.Music" Version="3.0.0" />
+		<PackageReference Include="Shiny.Music" Version="3.0.1-beta-0001" />
 		<PackageReference Include="Shiny.DocumentDb.Sqlite" Version="5.0.0" />
         <PackageReference Include="Shiny.DocumentDb.Extensions.DependencyInjection" Version="5.0.0" />
 	</ItemGroup>
