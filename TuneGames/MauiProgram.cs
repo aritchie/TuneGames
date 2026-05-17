@@ -17,7 +17,7 @@ public static class MauiProgram
         builder.Configuration.AddJsonStream(
             typeof(MauiProgram)
                 .Assembly
-                .GetManifestResourceStream("BeatTheBank.appsettings.json")!
+                .GetManifestResourceStream("TuneGames.appsettings.json")!
         );
         
         builder
