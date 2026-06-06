@@ -18,7 +18,7 @@ concurrency:
   cancel-in-progress: true
   
 env:
-  XCODE_VERSION: 26.4.1
+  XCODE_VERSION: 26.5.0
   DOTNET_TFM: 'net10.0'
   DOTNET_VERSION: '10.0.300'
   APP_PROJECT: './TuneGames/TuneGames.csproj'
