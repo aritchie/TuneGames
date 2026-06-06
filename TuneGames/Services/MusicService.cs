@@ -22,6 +22,7 @@ public interface IMusicService
     event Action? PlaybackCompleted;
 }
 
+[Singleton]
 public class MusicService : IMusicService
 {
     readonly IMediaLibrary library;

@@ -1,15 +1,23 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-
 namespace TuneGames.Services;
 
-[Reflector]
-public partial class GameSettings : ObservableObject 
+[Singleton]
+[BindNotify]
+public partial class GameSettings 
 {
-    [ObservableProperty] int songsPerRound = 4;
-    [ObservableProperty] int clipDurationSeconds  = 3;
-    [ObservableProperty] int totalChoices  = 12;
-    [ObservableProperty] int answerTimeLimitSeconds  = 30;
-    [ObservableProperty] int pauseBetweenClipsSeconds  = 1;
+    [Bind(Default = 4)]
+    public partial int SongsPerRound { get; set; }
+    
+    [Bind(Default = 3)]
+    public partial int ClipDurationSeconds { get; set; }
+    
+    [Bind(Default = 12)]
+    public partial int TotalChoices { get; set; }
+    
+    [Bind(Default = 30)]
+    public partial int AnswerTimeLimitSeconds { get; set; }
+    
+    [Bind(Default = 1)]
+    public partial int PauseBetweenClipsSeconds { get; set; }
     
     // public string? AzureOpenAiEndpoint  = "";
     // public string? AzureOpenAiApiKey  = "";

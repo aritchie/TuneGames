@@ -22,7 +22,10 @@ public static class MauiProgram
         
         builder
             .UseMauiApp<App>()
-            .UseShinyShell(x => x.AddGeneratedMaps())
+            .UseShinyShell(x => x
+                .AddGeneratedMaps()
+                .UseUxDiversDialogs()
+            )
             .UseShinyControls(x => x.AddDefaultMauiControlFeedback())
 #if !DEBUG
             .UseSentry(x => x.Dsn = builder.Configuration["SentryDsn"]!)
@@ -47,7 +50,6 @@ public static class MauiProgram
             config.UseReflectionFallback = false;
             
         });
-
         builder.Services.AddSingleton(_ =>
             new AzureOpenAIClient(
                     new Uri(builder.Configuration["AzureOpenAiEndpoint"]!),
@@ -56,12 +58,7 @@ public static class MauiProgram
                 .AsIChatClient()
         );
         builder.Services.AddShinyStores();
-        builder.Services.AddPersistentService<GameSettings>();
-
-        builder.Services.AddSingleton<IMusicService, MusicService>();
-        builder.Services.AddSingleton<IAiSongPicker, AiSongPicker>();
-        builder.Services.AddSingleton<IGameEngine, GameEngine>();
-        builder.Services.AddSingleton<IGameStore, GameStore>();
+        builder.Services.AddGeneratedServices();
 
         return builder.Build();
     }

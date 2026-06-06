@@ -17,6 +17,7 @@ public interface IAiSongPicker
     );
 }
 
+[Singleton]
 public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
 {
     // async Task<IChatClient> GetChatClientAsync()

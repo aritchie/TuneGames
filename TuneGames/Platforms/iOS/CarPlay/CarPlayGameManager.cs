@@ -36,10 +36,9 @@ public class CarPlayGameManager
             $"🎵 {categoryName}",
             CPInformationTemplateLayout.TwoColumn,
             [new CPInformationItem("Loading...", "AI is picking songs")],
-            []
+            [new CPTextButton("Quit", CPTextButtonStyle.Cancel, _ => this.ConfirmExit())]
         );
-        template.BackButton = new CPBarButton("Cancel", _ => this.ConfirmExit());
-        this.interfaceController.PushTemplate(template, true, null);
+        this.interfaceController.SetRootTemplate(template, true, null);
     }
 
     void ConfirmAnswerExit()
@@ -137,12 +136,10 @@ public class CarPlayGameManager
                 "Now Playing",
                 CPInformationTemplateLayout.TwoColumn,
                 items.ToArray(),
-                []
+                [new CPTextButton("Quit", CPTextButtonStyle.Cancel, _ => this.ConfirmExit())]
             );
-            template.BackButton = new CPBarButton("Cancel", _ => this.ConfirmExit());
 
-            this.interfaceController.PopToRootTemplate(false, null);
-            this.interfaceController.PushTemplate(template, true, null);
+            this.interfaceController.SetRootTemplate(template, false, null);
         });
     }
 
@@ -154,8 +151,7 @@ public class CarPlayGameManager
 
             this.selectedSongIds.Clear();
             var template = this.BuildAnswerList();
-            this.interfaceController.PopToRootTemplate(false, null);
-            this.interfaceController.PushTemplate(template, true, null);
+            this.interfaceController.SetRootTemplate(template, true, null);
         });
     }
 
@@ -178,10 +174,11 @@ public class CarPlayGameManager
 
         var section = new CPListSection(items, $"Pick {this.round.Settings.SongsPerRound} songs you heard", null);
 
+        var quitButton = new CPBarButton("Quit", _ => this.ConfirmAnswerExit());
         var submitButton = new CPBarButton("Submit", _ => this.SubmitAnswers());
 
         var template = new CPListTemplate("🧠 Name That Tune!", [section]);
-        template.BackButton = new CPBarButton("Quit", _ => this.ConfirmAnswerExit());
+        template.LeadingNavigationBarButtons = [quitButton];
         template.TrailingNavigationBarButtons = [submitButton];
         return template;
     }
@@ -208,8 +205,7 @@ public class CarPlayGameManager
             if (this.isCleanedUp || this.round == null) return;
 
             var template = this.BuildAnswerList();
-            this.interfaceController.PopTemplate(false, null);
-            this.interfaceController.PushTemplate(template, false, null);
+            this.interfaceController.SetRootTemplate(template, false, null);
         });
     }
 
@@ -260,10 +256,7 @@ public class CarPlayGameManager
                 items.ToArray(),
                 [new CPTextButton("Play Again", CPTextButtonStyle.Confirm, _ => this.onGameExit())]
             );
-            template.BackButton = new CPBarButton("Done", _ => this.onGameExit());
-
-            this.interfaceController.PopToRootTemplate(false, null);
-            this.interfaceController.PushTemplate(template, true, null);
+            this.interfaceController.SetRootTemplate(template, true, null);
         });
     }
 
@@ -280,8 +273,7 @@ public class CarPlayGameManager
                 [new CPTextButton("Back", CPTextButtonStyle.Cancel, _ => this.onGameExit())]
             );
 
-            this.interfaceController.PopToRootTemplate(false, null);
-            this.interfaceController.PushTemplate(template, true, null);
+            this.interfaceController.SetRootTemplate(template, true, null);
         });
     }
 

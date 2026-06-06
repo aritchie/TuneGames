@@ -10,6 +10,7 @@ public interface IGameEngine
     GameResult SubmitAnswers(GameRound round, IReadOnlyList<string> selectedSongIds);
 }
 
+[Singleton]
 public class GameEngine(IMusicService music, IAiSongPicker aiPicker) : IGameEngine
 {
     public async Task<GameRound> StartRoundAsync(string categoryName, MusicFilter filter, GameSettings settings, string? playlistId = null)

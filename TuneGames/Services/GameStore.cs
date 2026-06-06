@@ -10,6 +10,7 @@ public interface IGameStore
     Task ClearResultsAsync();
 }
 
+[Singleton]
 public class GameStore(IDocumentStore store) : IGameStore
 {
     public async Task<IReadOnlyList<GameResult>> GetResultsAsync()
