@@ -14,7 +14,7 @@ public partial class GamePlayViewModel(
     IGameEngine gameEngine,
     IMusicService music,
     GameSettings settings,
-    ILogger<GamePlayViewModel> logger,
+    ILogger<GamePlayViewModel> logger
 ) : ObservableObject, IPageLifecycleAware, INavigationConfirmation
 {
     CancellationTokenSource? playCts;
