@@ -12,7 +12,9 @@
 
         <CollectionView ItemsSource="{Binding Groups}"
                         IsGrouped="True"
-                        SelectionMode="None">
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedCategory}"
+                        SelectionChangedCommand="{Binding CategorySelectedCommand}">
 
             <CollectionView.Header>
                 <Label Text="Pick a category for this round"
@@ -35,11 +37,6 @@
                            StrokeShape="RoundRectangle 10"
                            Stroke="{AppThemeBinding Light=#E0E0E0, Dark=#444}"
                            BackgroundColor="{AppThemeBinding Light=#FAFAFA, Dark=#2A2A2A}">
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CategorySelectViewModel}}, Path=SelectCategoryCommand}"
-                                CommandParameter="{Binding}" />
-                        </Border.GestureRecognizers>
                         <Grid ColumnDefinitions="*,Auto">
                             <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" />
                             <Label Grid.Column="1" FontSize="14" Opacity="0.6"

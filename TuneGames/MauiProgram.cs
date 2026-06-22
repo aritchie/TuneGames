@@ -48,15 +48,16 @@ public static class MauiProgram
             config.DatabaseProvider = new SqliteDatabaseProvider($"Data Source={dbPath}");
             config.JsonSerializerOptions = AppJsonContext.Default.Options;
             config.UseReflectionFallback = false;
-            
         });
-        builder.Services.AddSingleton(_ =>
-            new AzureOpenAIClient(
-                    new Uri(builder.Configuration["AzureOpenAiEndpoint"]!),
-                    new AzureKeyCredential(builder.Configuration["AzureOpenAiApiKey"]!))
-                .GetChatClient(builder.Configuration["AzureOpenAiModel"]!)
-                .AsIChatClient()
-        );
+
+        var chatClient = new AzureOpenAIClient(
+                new Uri(builder.Configuration["AzureOpenAiEndpoint"]!),
+                new AzureKeyCredential(builder.Configuration["AzureOpenAiApiKey"]!)
+            )
+            .GetChatClient(builder.Configuration["AzureOpenAiModel"]!)
+            .AsIChatClient();
+            
+        builder.Services.AddSingleton(chatClient);
         builder.Services.AddShinyStores();
         builder.Services.AddGeneratedServices();
 

@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.Logging;
 using Shiny;
 using TuneGames.Models;
 using TuneGames;
@@ -13,7 +14,8 @@ public partial class CategorySelectViewModel(
     INavigator navigator, 
     IDialogs dialogs,
     GameSettings settings, 
-    IMusicService music
+    IMusicService music,
+    ILogger<CategorySelectViewModel> logger
 ) : ObservableObject, IPageLifecycleAware
 {
     [ObservableProperty]
@@ -21,6 +23,9 @@ public partial class CategorySelectViewModel(
 
     [ObservableProperty]
     bool isLoading;
+
+    [ObservableProperty]
+    CategoryItem? selectedCategory;
 
     public void OnAppearing() => _ = this.LoadCategories();
     public void OnDisappearing() { }
@@ -78,15 +83,32 @@ public partial class CategorySelectViewModel(
     }
 
     [RelayCommand]
-    Task SelectCategory(CategoryItem item)
-        => navigator.NavigateTo<GamePlayViewModel>(vm =>
+    async Task CategorySelected()
+    {
+        var item = this.SelectedCategory;
+        if (item == null)
+            return;
+        
+        try
         {
-            vm.CategoryName = item.DisplayName;
-            vm.Genre = item.Genre;
-            vm.Decade = item.Decade;
-            vm.Year = item.Year;
-            vm.PlaylistId = item.PlaylistId;
-        });
+            await navigator.NavigateTo<GamePlayViewModel>(vm =>
+            {
+                vm.CategoryName = item.DisplayName;
+                vm.Genre = item.Genre;
+                vm.Decade = item.Decade;
+                vm.Year = item.Year;
+                vm.PlaylistId = item.PlaylistId;
+            });
+
+            // reset so the same category can be picked again when navigating back
+            this.SelectedCategory = null;
+        }
+        catch (Exception ex)
+        {
+            dialogs.Alert("Error Category Selected", ex.ToString());
+            logger.LogError(ex, "Error Category Selected");
+        }
+    }
 }
 
 public class CategoryGroup(string name, List<CategoryItem> items) : ObservableCollection<CategoryItem>(items)
