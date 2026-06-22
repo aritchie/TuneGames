@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.Logging;
 using Shiny;
 using Shiny.Music;
 using TuneGames.Models;
@@ -12,7 +13,8 @@ public partial class GamePlayViewModel(
     IDialogs dialogs,
     IGameEngine gameEngine,
     IMusicService music,
-    GameSettings settings
+    GameSettings settings,
+    ILogger<GamePlayViewModel> logger,
 ) : ObservableObject, IPageLifecycleAware, INavigationConfirmation
 {
     CancellationTokenSource? playCts;
@@ -116,6 +118,7 @@ public partial class GamePlayViewModel(
         }
         catch (Exception ex)
         {
+            logger.LogError(ex, "An exception occurred while starting the game");
             await dialogs.Alert("Error", ex.ToString());
             await navigator.GoBack();
         }

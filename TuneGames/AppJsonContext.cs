@@ -7,5 +7,7 @@ namespace TuneGames;
 [JsonSerializable(typeof(Category))]
 [JsonSerializable(typeof(GameSettings))]
 [JsonSerializable(typeof(GameResult))]
-[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
+[JsonSerializable(typeof(List<TrackInfo>))]
+[JsonSerializable(typeof(AiResponse))]
+[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, PropertyNameCaseInsensitive = true)]
 partial class AppJsonContext : JsonSerializerContext;

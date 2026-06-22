@@ -7,6 +7,10 @@ using TuneGames.Models;
 
 namespace TuneGames.Services;
 
+record TrackInfo(string Id, string? Title, string? Artist, string? Album);
+
+record AiResponse(List<string> PlayIds, List<string> DecoyIds);
+
 public interface IAiSongPicker
 {
     Task<AiPickResult> PickSongsAsync(
@@ -46,10 +50,10 @@ public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
             .ToList();
         
         var trackList = shuffled
-            .Select(t => new { t.Id, t.Title, t.Artist, t.Album })
+            .Select(t => new TrackInfo(t.Id, t.Title, t.Artist, t.Album))
             .ToList();
 
-        var trackJson = JsonSerializer.Serialize(trackList);
+        var trackJson = JsonSerializer.Serialize(trackList, AppJsonContext.Default.ListTrackInfo);
 
         var prompt = $"""
             You are a music trivia game assistant. Given a category and a list of available songs,
@@ -80,10 +84,7 @@ public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
             content = string.Join('\n', lines.Skip(1).TakeWhile(l => !l.StartsWith("```")));
         }
 
-        var result = JsonSerializer.Deserialize<AiResponse>(content, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        });
+        var result = JsonSerializer.Deserialize(content, AppJsonContext.Default.AiResponse);
 
         if (result == null)
             throw new InvalidOperationException("AI returned invalid response");
@@ -132,6 +133,4 @@ public class AiSongPicker(IChatClient chatClient) : IAiSongPicker
         Duration: track.Duration,
         IsCorrect: isCorrect
     );
-
-    record AiResponse(List<string> PlayIds, List<string> DecoyIds);
 }
